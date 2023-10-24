@@ -42,13 +42,16 @@ function MainContainer() {
 
         rows.slice(2).forEach((row) => {
             const [country, currency, amount, code, rate] = row.split('|')
-            currencies.set(code, {
-                country,
-                currency,
-                amount: Number(amount),
-                code,
-                rate: Number(rate),
-            })
+
+            if (country && currency) {
+                currencies.set(code, {
+                    country,
+                    currency,
+                    amount: Number(amount),
+                    code,
+                    rate: Number(rate),
+                })
+            }
         })
     }, [currencies, data])
 
