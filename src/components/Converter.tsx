@@ -20,6 +20,7 @@ const ButtonContainer = styled.div`
 
 const Button = styled.button`
     flex: 1 1 100%;
+    cursor: pointer;
 `
 
 function Converter({ currencies }: { currencies: Currencies; }) {
@@ -43,7 +44,6 @@ function Converter({ currencies }: { currencies: Currencies; }) {
                     type="number"
                     value={koruna}
                     onChange={(e) => {
-                        setDisplayConversion(false)
                         setKoruna(e.target.value)
                     }}
                 />
@@ -53,7 +53,6 @@ function Converter({ currencies }: { currencies: Currencies; }) {
                 </label>
                 <select
                     onChange={(e) => {
-                        setDisplayConversion(false)
                         setSelectedCurrency(e.target.value)
                     }}
                 >
@@ -73,13 +72,19 @@ function Converter({ currencies }: { currencies: Currencies; }) {
                 </select>
 
                 <ButtonContainer>
-                    <Button onClick={() => setDisplayConversion(true)} type="button">Convert</Button>
+                    <Button onClick={() => {
+                        if (!koruna) {
+                            alert('Missing value in Czech Koruna to convert')
+                        }
+
+                        setDisplayConversion(true)
+                    }} type="button">Convert</Button>
                 </ButtonContainer>
             </Form>
 
-            {displayConversion && koruna !== '' && selectedCurrency && (
+            {displayConversion && koruna && selectedCurrency && (
                 <ConvertedAmount
-                    korunaAmount={koruna != null ? Number(koruna) : null}
+                    korunaAmount={Number(koruna)}
                     currency={currencies.get(selectedCurrency)}
                 />
             )}
