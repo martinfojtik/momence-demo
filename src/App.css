@@ -1,0 +1,8 @@
+:root {
+    --gap-space: 20px
+}
+
+#root {
+    display: flex;
+    justify-content: center;
+}
