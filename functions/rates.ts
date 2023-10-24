@@ -1,4 +1,4 @@
-// CLoudFlare pages function
+// CLoudFlare Pages function is used as simple proxy
 // @link: https://developers.cloudflare.com/pages/platform/functions/
 
 export async function onRequest(context) {
