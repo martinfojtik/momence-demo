@@ -49,6 +49,7 @@
         "web-vitals": "^3.5.0"
     },
     "devDependencies": {
+        "@cloudflare/workers-types": "^4.20231016.0",
         "wrangler": "^3.14.0"
     }
 }
