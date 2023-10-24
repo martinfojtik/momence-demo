@@ -6,8 +6,7 @@ import Converter from './Converter'
 import ExchangeRates from './ExchangeRates'
 import { Currencies } from "../types"
 
-const url = 'http://localhost:3000/daily.txt'
-// const url = 'https://www.cnb.cz/en/financial-markets/foreign-exchange-market/central-bank-exchange-rate-fixing/central-bank-exchange-rate-fixing/daily.txt'
+const url = window.location.host  ? '/daily.txt' : '/routes'
 
 const Container = styled.div`
     display: grid;
