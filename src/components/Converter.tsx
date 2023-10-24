@@ -58,7 +58,7 @@ function Converter({ currencies }: { currencies: Currencies; }) {
                 >
                     {Array.from(currencies.keys()).map((item) => {
                         const currency = currencies.get(item)
-                        if (currency == null) {
+                        if (!currency) {
                             return null
                         }
 

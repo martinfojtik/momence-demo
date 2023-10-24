@@ -52,11 +52,11 @@ function MainContainer() {
         })
     }, [currencies, data])
 
-    if (isLoading) {
+    if (isLoading || !currencies.size) {
         return <Container>Loading...</Container>
     }
 
-    if (error || !data) {
+    if (error) {
         return <Container>Error: Can't get rates data!</Container>
     }
 
