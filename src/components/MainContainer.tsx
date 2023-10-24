@@ -6,7 +6,7 @@ import Converter from './Converter'
 import ExchangeRates from './ExchangeRates'
 import { Currencies } from "../types"
 
-const url = window.location.host  ? '/daily.txt' : '/routes'
+const url = window.location.host.includes('localhost')  ? '/daily.txt' : '/routes'
 
 const Container = styled.div`
     display: grid;
