@@ -74,7 +74,7 @@ function Converter({ currencies }: { currencies: Currencies; }) {
                 <ButtonContainer>
                     <Button onClick={() => {
                         if (!koruna) {
-                            alert('Missing value in Czech Koruna to convert')
+                            alert('Missing value in Czech Koruna to convert.')
                         }
 
                         setDisplayConversion(true)

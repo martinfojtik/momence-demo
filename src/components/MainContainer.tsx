@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useQuery } from 'react-query'
 import styled from 'styled-components'
 
@@ -22,23 +22,21 @@ export const Title = styled.h2`
 
 function MainContainer() {
     const [date, setDate] = useState<string>()
-    const [currencies] = useState<Currencies>(new Map())
 
-    const {isLoading, data, error} = useQuery('currencyData', () =>
-        fetch(url, {
+    const {isLoading, data, error} = useQuery<Currencies>('currencyData', async () => {
+        const request = await fetch(url, {
             cache: "no-cache",
             referrerPolicy: "no-referrer",
             credentials: "omit"})
-            .then((res) => res.text())
-        )
 
-    useEffect(() => {
-        if (!data) {
-            return
+        if (!request.ok) {
+            throw new Error(`Can't fetch data!`)
         }
 
+        const data = await request.text()
         const rows = data.split('\n')
         setDate(rows[0])
+        const currencies = new Map()
 
         rows.slice(2).forEach((row) => {
             const [country, currency, amount, code, rate] = row.split('|')
@@ -53,20 +51,22 @@ function MainContainer() {
                 })
             }
         })
-    }, [currencies, data])
 
-    if (isLoading || !currencies.size) {
+        return currencies
+    })
+
+    if (isLoading) {
         return <Container>Loading...</Container>
     }
 
-    if (error) {
+    if (error || !data || !data.size) {
         return <Container>Error: Can't get rates data!</Container>
     }
 
     return (
         <Container>
-            <ExchangeRates date={date} currencies={currencies}/>
-            <Converter currencies={currencies}/>
+            <ExchangeRates date={date} currencies={data}/>
+            <Converter currencies={data}/>
         </Container>
     )
 }
