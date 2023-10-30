@@ -1,6 +1,6 @@
 # Momence Demo App
 
-Simple app wich shows Czech Koruna Exchange Rates from ČNB.
+Simple app which shows Czech Koruna Exchange Rates from ČNB.
 
 ### Local run
 
