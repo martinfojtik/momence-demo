@@ -10,9 +10,13 @@ const url = window.location.host.includes('localhost')  ? '/daily.txt' : '/rates
 
 const Container = styled.div`
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: var(--gap-space);
-    margin-bottom: var(--gap-space);
+    grid-template-columns: repeat(2, minmax(400px, 1fr));
+    grid-gap: var(--gap-medium);
+    margin-bottom: var(--gap-medium);
+
+    @media (max-width: 860px) {
+        grid-template-columns: 1fr;
+    }
 `
 
 export const Title = styled.h2`

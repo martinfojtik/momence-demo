@@ -10,7 +10,7 @@ const Subtitle = styled.p`
 `
 
 const DataList = styled.ul`
-    margin: var(--gap-space) 0 0;
+    margin: var(--gap-medium) 0 0;
     padding: 0;
     list-style: none;
 `

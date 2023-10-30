@@ -8,9 +8,13 @@ import { Currencies } from "../types"
 const Form = styled.div`
     display: grid;
     grid-template-columns: auto auto;
-    margin: 12px 0;
-    row-gap: 8px;
-    column-gap: 8px;
+    margin: var(--gap-small) 0;
+    grid-gap: var(--gap-small);
+
+    @media (max-width: 400px)  {
+        display: flex;
+        flex-direction: column;
+    }
 `
 
 const ButtonContainer = styled.div`
@@ -24,7 +28,7 @@ const Button = styled.button`
 `
 
 function Converter({ currencies }: { currencies: Currencies; }) {
-    const [koruna, setKoruna] = useState<string>('')
+    const [ammount, setAmmount] = useState<string>('')
     const [selectedCurrency, setSelectedCurrency] = useState<string>()
     const [displayConversion, setDisplayConversion] = useState<boolean>(false)
 
@@ -42,9 +46,10 @@ function Converter({ currencies }: { currencies: Currencies; }) {
                 <label>Czech Koruna to convert:</label>
                 <input
                     type="number"
-                    value={koruna}
+                    value={ammount}
                     onChange={(e) => {
-                        setKoruna(e.target.value)
+                        setAmmount(e.target.value)
+                        setDisplayConversion(false)
                     }}
                 />
 
@@ -54,6 +59,7 @@ function Converter({ currencies }: { currencies: Currencies; }) {
                 <select
                     onChange={(e) => {
                         setSelectedCurrency(e.target.value)
+                        setDisplayConversion(false)
                     }}
                 >
                     {Array.from(currencies.keys()).map((item) => {
@@ -73,7 +79,7 @@ function Converter({ currencies }: { currencies: Currencies; }) {
 
                 <ButtonContainer>
                     <Button onClick={() => {
-                        if (!koruna) {
+                        if (!ammount) {
                             alert('Missing value in Czech Koruna to convert.')
                         }
 
@@ -82,9 +88,9 @@ function Converter({ currencies }: { currencies: Currencies; }) {
                 </ButtonContainer>
             </Form>
 
-            {displayConversion && koruna && selectedCurrency && (
+            {displayConversion && ammount && selectedCurrency && (
                 <ConvertedAmount
-                    korunaAmount={Number(koruna)}
+                    korunaAmount={Number(ammount)}
                     currency={currencies.get(selectedCurrency)}
                 />
             )}
