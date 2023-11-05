@@ -24,40 +24,41 @@ export const Title = styled.h2`
     text-align: center;
 `
 
+const fetchCurrencyData = (setDate: React.Dispatch<React.SetStateAction<string | undefined>>) => async () => {
+    const request = await fetch(url, {
+        cache: "no-cache",
+        referrerPolicy: "no-referrer",
+        credentials: "omit"})
+
+    if (!request.ok) {
+        throw new Error(`Can't fetch data!`)
+    }
+
+    const data = await request.text()
+    const rows = data.split('\n')
+    setDate(rows[0])
+    const currencies = new Map()
+
+    rows.slice(2).forEach((row) => {
+        const [country, currency, amount, code, rate] = row.split('|')
+
+        if (country && currency) {
+            currencies.set(code, {
+                country,
+                currency,
+                amount: Number(amount),
+                code,
+                rate: Number(rate),
+            })
+        }
+    })
+
+    return currencies
+}
+
 function MainContainer() {
     const [date, setDate] = useState<string>()
-
-    const {isLoading, data, error} = useQuery<Currencies>('currencyData', async () => {
-        const request = await fetch(url, {
-            cache: "no-cache",
-            referrerPolicy: "no-referrer",
-            credentials: "omit"})
-
-        if (!request.ok) {
-            throw new Error(`Can't fetch data!`)
-        }
-
-        const data = await request.text()
-        const rows = data.split('\n')
-        setDate(rows[0])
-        const currencies = new Map()
-
-        rows.slice(2).forEach((row) => {
-            const [country, currency, amount, code, rate] = row.split('|')
-
-            if (country && currency) {
-                currencies.set(code, {
-                    country,
-                    currency,
-                    amount: Number(amount),
-                    code,
-                    rate: Number(rate),
-                })
-            }
-        })
-
-        return currencies
-    })
+    const {isLoading, data, error} = useQuery<Currencies>('currencyData', fetchCurrencyData(setDate))
 
     if (isLoading) {
         return <Container>Loading...</Container>
