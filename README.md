@@ -1,6 +1,6 @@
 # Momence Demo App
 
-Simple app which shows Czech Koruna Exchange Rates from ČNB.
+Simple app which shows Czech Koruna Exchange Rates from ČNB. It uses Cloudflare pages function as simple proxy.
 
 ### Local run
 
@@ -10,4 +10,7 @@ Simple app which shows Czech Koruna Exchange Rates from ČNB.
 
 https://momence-demo.pages.dev/
 
+### Deploy
+
+`npm run pages:deploy`
 
